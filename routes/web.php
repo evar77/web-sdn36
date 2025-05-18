@@ -6,6 +6,8 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\EkstrakurikulerController;
 use App\Http\Controllers\EventSekolahController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('halaman1');
@@ -35,9 +37,11 @@ Route::get('/login', function () {
 
 // Semua route admin di-protect auth
 Route::prefix('admin')->middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+    // Profile Routes
+    Route::get('/profile', [ProfileController::class, 'index'])->name('admin.profile');
+    Route::post('/profile', [ProfileController::class, 'update'])->name('admin.profile.update');
 
     // Guru Routes
     Route::get('/guru', [GuruController::class, 'index'])->name('admin.guru');
@@ -55,10 +59,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::put('/ekstrakurikuler/update/{id}', [EkstrakurikulerController::class, 'update'])->name('admin.update.ekstrakurikuler');
     Route::delete('/ekstrakurikuler/delete/{id}', [EkstrakurikulerController::class, 'destroy'])->name('admin.delete.ekstrakurikuler');
 
-    // Route::get('/ekstrakurikuler', function () {
-    //     return view('admin.ekstrakurikuler');
-    // })->name('admin.ekstrakurikuler');
-
     //Event Sekolah Routes
     Route::get('/eventsekolah', [EventSekolahController::class, 'index'])->name('admin.eventsekolah'); 
     Route::get('/eventsekolah/tambah', [EventSekolahController::class, 'create'])->name('admin.tambah.eventsekolah');
@@ -66,10 +66,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/eventsekolah/edit/{id}', [EventSekolahController::class, 'edit'])->name('admin.edit.eventsekolah');
     Route::put('/eventsekolah/update/{id}', [EventSekolahController::class, 'update'])->name('admin.update.eventsekolah');
     Route::delete('/eventsekolah/delete/{id}', [EventSekolahController::class, 'destroy'])->name('admin.delete.eventsekolah');
-    
-    // Route::get('/event', function () {
-    //     return view('admin.eventsekolah');
-    // })->name('admin.eventsekolah');
 });
 
 

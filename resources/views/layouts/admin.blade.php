@@ -139,6 +139,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('admin.profile') }}" class="{{ request()->routeIs('admin.profile') ? 'active' : '' }}">
+                    <i class="bi bi-person-circle"></i>
+                    Profile
+                </a>
+            </li>
+            <li>
                 <form action="{{ route('admin.logout') }}" method="POST" class="mt-4">
                     @csrf
                     <button type="submit" class="btn btn-danger w-100">
