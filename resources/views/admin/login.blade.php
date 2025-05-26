@@ -14,6 +14,9 @@
                 @if(session('error'))
                     <div class="alert alert-danger">{{ session('error') }}</div>
                 @endif
+                @if(session('status'))
+                    <div class="alert alert-success">{{ session('status') }}</div>
+                @endif
                 <form method="POST" action="{{ route('admin.login') }}">
                     @csrf
                     <div class="mb-3">
@@ -25,6 +28,9 @@
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Login</button>
+                    <div class="text-center mt-3">
+                        <a href="{{ route('admin.password.request') }}" class="text-decoration-none">Forgot Password?</a>
+                    </div>
                 </form>
             </div>
         </div>

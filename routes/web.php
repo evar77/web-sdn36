@@ -8,6 +8,7 @@ use App\Http\Controllers\EkstrakurikulerController;
 use App\Http\Controllers\EventSekolahController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Admin\ForgotPasswordController;
 
 Route::get('/', function () {
     return view('halaman1');
@@ -67,5 +68,15 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::put('/eventsekolah/update/{id}', [EventSekolahController::class, 'update'])->name('admin.update.eventsekolah');
     Route::delete('/eventsekolah/delete/{id}', [EventSekolahController::class, 'destroy'])->name('admin.delete.eventsekolah');
 });
+
+// Admin Password Reset Routes
+Route::get('admin/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])
+    ->name('admin.password.request');
+Route::post('admin/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+    ->name('admin.password.email');
+Route::get('admin/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])
+    ->name('admin.password.reset');
+Route::post('admin/reset-password', [ForgotPasswordController::class, 'reset'])
+    ->name('admin.password.update');
 
 
